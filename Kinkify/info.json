@@ -1,0 +1,23 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Cog-Creators/Red-DiscordBot/V3/develop/schema/red_cog.schema.json",
+    "name": "kinkify",
+    "short": "Some BDSM-themed additions to spice it up a little.",
+    "description": "This Cog implements spicy commands, useful especially for those that dabble in the beyond-vanilla spectrum.",
+    "end_user_data_statement": "This cog stores user IDs and message contents for claim, jail, and moderation purposes.",
+    "install_msg": "Thank you for installing the kinkify!",
+    "author": [
+        "Aimonomiae"
+    ],
+    "required_cogs": {},
+    "requirements": [],
+    "tags": [
+        "Lifestyle",
+        "Nsfw",
+        "Bdsm"
+    ],
+    "min_bot_version": "3.5.5",
+    "version" : "2.0.0",
+    "hidden": false,
+    "disabled": false,
+    "type": "COG"
+}

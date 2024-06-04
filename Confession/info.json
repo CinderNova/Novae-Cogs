@@ -1,0 +1,22 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Cog-Creators/Red-DiscordBot/V3/develop/schema/red_cog.schema.json",
+    "name": "confession",
+    "short": "Confessions or even naughtier things",
+    "description": "This Cog implements and manages confession features (and lovense control link posting) anonymously or not.",
+    "end_user_data_statement": "This cog stores user IDs and message contents only for moderation purposes.",
+    "install_msg": "Thank you for installing the confession cog!",
+    "author": [
+        "Cardinals of the Cosmos"
+    ],
+    "required_cogs": {},
+    "requirements": [],
+    "tags": [
+        "Confession",
+        "NSFW"
+    ],
+    "min_bot_version": "3.5.9",
+    "version" : "1.0.0",
+    "hidden": false,
+    "disabled": false,
+    "type": "COG"
+}

@@ -1,0 +1,22 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Cog-Creators/Red-DiscordBot/V3/develop/schema/red_cog.schema.json",
+    "name": "theatre",
+    "short": "Commands that essentially perform, like hugging and kissing, smiling, and more.",
+    "description": "This Cog serves the concrete purpose of providing means for members to interact with each other, in a way that serves more expression than without.",
+    "end_user_data_statement": "This cog does not store any user information.",
+    "install_msg": "Thank you for installing Theatre!",
+    "author": [
+        "Aimonomiae"
+    ],
+    "required_cogs": {},
+    "requirements": [],
+    "tags": [
+        "Lifestyle",
+        "Performing"
+    ],
+    "min_bot_version": "3.5.5",
+    "version" : "2.0.0",
+    "hidden": false,
+    "disabled": false,
+    "type": "COG"
+}

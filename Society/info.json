@@ -1,0 +1,25 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Cog-Creators/Red-DiscordBot/V3/develop/schema/red_cog.schema.json",
+    "name": "society",
+    "short": "Adds an economy with jobs, a shop, marriage, and more.",
+    "description": "This Cog serves the concrete purpose of providing means for members to fiscally and socially interact with each other, with a working economy, shop, ...",
+    "end_user_data_statement": "This cog stores IDs in relation to user inventories and profiles (related to the economy).",
+    "install_msg": "Thank you for installing society!",
+    "author": [
+        "Aimonomiae"
+    ],
+    "required_cogs": {},
+    "requirements": [],
+    "tags": [
+        "Lifestyle",
+        "Jobs",
+        "Marriage",
+        "Economy",
+        "Shop"
+    ],
+    "min_bot_version": "3.5.5",
+    "version" : "2.0.0",
+    "hidden": false,
+    "disabled": false,
+    "type": "COG"
+}

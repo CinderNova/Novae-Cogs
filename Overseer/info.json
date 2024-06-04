@@ -1,0 +1,23 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Cog-Creators/Red-DiscordBot/V3/develop/schema/red_cog.schema.json",
+    "name": "overseer",
+    "short": "This addon combines verification and moderation and is a culmination of both.",
+    "description": "This Cog serves the concrete purpose of providing means for staff to moderate a server, and verify users easily.",
+    "end_user_data_statement": "This cog stores IDs, logs member transgressions, and allows for blacklisting of members.",
+    "install_msg": "Thank you for installing overseer!",
+    "author": [
+        "Aimonomiae"
+    ],
+    "required_cogs": {},
+    "requirements": [],
+    "tags": [
+        "Moderation",
+        "Verification",
+        "Logging"
+    ],
+    "min_bot_version": "3.5.5",
+    "version" : "2.0.0",
+    "hidden": false,
+    "disabled": false,
+    "type": "COG"
+}
