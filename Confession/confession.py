@@ -7,22 +7,8 @@ import redbot.core.data_manager
 
 
 timestamp = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-thumbnail_path = f"{os.path.dirname(__file__)}/thumbnail.png"
 
-class confession(commands.Cog):
-    """
-    Commands related to confession are managed here.
-    """
-    
-    def __init__(self, bot: Red) -> None:
-        self.bot = bot
-        current_directory = redbot.core.data_manager.cog_data_path(cog_instance=self)
-        debug_file_path = f"{current_directory}/debug.log"
-        
-        self.debug_file = None
-        self.identifier = self.bot.user.id
-        self.config = Config.get_conf(self, identifier = self.identifier, force_registration=True)
-        default_guild = {
+default_guild_settings = {
             'enable_confession' : True,
             'enable_control_links' : False,
             'enable_debug' : False,
@@ -37,7 +23,22 @@ class confession(commands.Cog):
             'control_links' : {},
             'word_blacklist' : []
         }
-        self.config.register_guild(**default_guild)
+
+class confession(commands.Cog):
+    """
+    Commands related to confession are managed here.
+    """
+    
+    def __init__(self, bot: Red) -> None:
+        self.bot = bot
+        current_directory = redbot.core.data_manager.cog_data_path(cog_instance=self)
+        debug_file_path = f"{current_directory}/debug.log"
+        
+        self.debug_file = None
+        self.identifier = self.bot.user.id
+        self.config = Config.get_conf(self, identifier = self.identifier, force_registration=True)
+        
+        self.config.register_guild(**default_guild_settings)
 
     async def debug_log(self, guild, command, message):
         current_directory = redbot.core.data_manager.cog_data_path(cog_instance=self)
@@ -51,7 +52,7 @@ class confession(commands.Cog):
     @commands.guild_only()
     @commands.has_permissions(administrator=True)
     async def booth(self, ctx):
-        """ The group of commands related to confession (settings). """
+        """ Group of commands related to confession settings. """
     
     @booth.command()
     @commands.guild_only()
@@ -59,6 +60,8 @@ class confession(commands.Cog):
     async def enable_confession(self, ctx, bool: str):
         """ Enable or disable confession. """
         guild = ctx.guild
+        author = ctx.message.author
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -79,6 +82,8 @@ class confession(commands.Cog):
     async def enable_control_links(self, ctx, bool: str):
         """ Enable or disable Lovense control links. """
         guild = ctx.guild
+        author = ctx.message.author
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -99,7 +104,8 @@ class confession(commands.Cog):
     async def enable_check(self, ctx, bool: str):
         """ Enable or disable for the bot to check confessions for banned words. """
         guild = ctx.guild
-
+        author = ctx.message.author
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -120,7 +126,8 @@ class confession(commands.Cog):
     async def enable_debug(self, ctx, bool: str):
         """Enable or disable debugging."""
         guild = ctx.guild
-
+        author = ctx.message.author
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -141,7 +148,8 @@ class confession(commands.Cog):
     async def enable_staff_check(self, ctx, bool: str):
         """ Enable or disable the ability for staff to check Lovense control links or confessions, and limits it to Administrators. """
         guild = ctx.guild
-
+        author = ctx.message.author
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -162,7 +170,9 @@ class confession(commands.Cog):
     async def enable_report(self, ctx, bool: str):
         """ Enable or disable reporting of confessions or control links. """
         guild = ctx.guild
-
+        author = ctx.message.author
+        clr = await ctx.embed_colour()
+        
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
             await self.debug_log(guild, "add", "Running 'enable_report' sub-command of 'booth' command.")
@@ -208,6 +218,7 @@ class confession(commands.Cog):
         
         guild = ctx.guild
         author = ctx.message.author
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -228,6 +239,7 @@ class confession(commands.Cog):
         
         guild = ctx.guild
         author = ctx.message.author
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -248,6 +260,7 @@ class confession(commands.Cog):
         
         guild = ctx.guild
         author = ctx.message.author
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -273,6 +286,7 @@ class confession(commands.Cog):
         
         guild = ctx.guild
         author = ctx.message.author
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -302,6 +316,7 @@ class confession(commands.Cog):
         
         guild = ctx.guild
         author = ctx.message.author
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -322,7 +337,7 @@ class confession(commands.Cog):
         
         guild = ctx.guild
         author = ctx.message.author
- 
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -349,7 +364,7 @@ class confession(commands.Cog):
         
         guild = ctx.guild
         author = ctx.message.author
-
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -370,7 +385,7 @@ class confession(commands.Cog):
         
         guild = ctx.guild
         author = ctx.message.author
- 
+        clr = await ctx.embed_colour()
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -542,11 +557,9 @@ class confession(commands.Cog):
         # Check if the user wants to post it anonymously or not, and post it
         
         if anonymous == None or anonymous.lower() in ["yes", "ye", "ya", "yip", "yup", "yas", "yay"]:
-            embed = discord.Embed(title=f"**Confession   -   # {confession_number}**", description = "An unknown soul says, \n\n" + confession, color = clr)
+            embed = discord.Embed(title=f"**Confession   -   # {confession_number}**", description = confession, color = clr)
             embed.set_footer(text="Date - {}".format(timestamp))
-            thumbnail = discord.File(thumbnail_path, filename = "thumbnail.png")
-            embed.set_thumbnail(url="attachment://thumbnail.png")
-            msg = await guild.get_channel(confession_channel.id).send(file=thumbnail, embed=embed)
+            msg = await guild.get_channel(confession_channel.id).send( embed=embed)
             message_timestamp = msg.created_at.strftime("%A, %d. %B %Y %I:%M%p")
             confession_entry = {
                 "confession_id" : confession_number,
@@ -563,12 +576,10 @@ class confession(commands.Cog):
             await interaction.response.send_message(f"Your wish is my command, {author.name}. \n The confession has been anonymously sent to {confession_channel.mention}. Do keep in mind that, should it be anything illegal or rule-breaking, I reserve the right to check for whoever is responsible.", ephemeral=True)
        
         elif anonymous.lower() in ["no", "nope", "nah", "na", "nahh", "non't", "nay", "nein", "niet", "njet", "ne", "nen", "nejn"]:
-            embed = discord.Embed(title=f"**Confession   -   # {confession_number}**", description = f"{author.name} has confessed to me; their words were: \n" + confession, color = clr)
+            embed = discord.Embed(title=f"**Confession   -   # {confession_number}**", description = confession, color = clr)
             embed.set_author(name=" - Requested by {} - ".format(author), icon_url=author.display_avatar.url)
             embed.set_footer(text="Date - {}".format(timestamp))
-            thumbnail = discord.File(thumbnail_path, filename = "thumbnail.png")
-            embed.set_thumbnail(url="attachment://thumbnail.png")
-            msg = await guild.get_channel(confession_channel.id).send(file=thumbnail, embed=embed)
+            msg = await guild.get_channel(confession_channel.id).send(embed=embed)
             message_timestamp = msg.created_at.strftime("%A, %d. %B %Y %I:%M%p")
             confession_entry = {
                 "confession_id" : confession_number,
@@ -881,3 +892,6 @@ class confession(commands.Cog):
             return
 
 
+  
+    
+    

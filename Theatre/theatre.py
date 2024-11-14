@@ -3,11 +3,18 @@ from redbot.core import commands, app_commands
 from redbot.core.bot import Red
 from redbot.core.config import Config
 from discord.utils import get
+from hmtaipy import pyhmtai
 import redbot.core.data_manager
+import requests
+
 
 # Set the timestamp as of the time of the command.
 timestamp = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-giflist = "/home/Themis/cogs/CogManager/cogs/theatre/cmdgifs.json"
+giflist = "/home/aimonomia/discord/akarin/akarin_files/cogs/CogManager/cogs/theatre/cmdgifs.json"
+
+
+
+
 
 class theatre(commands.Cog):
     """
@@ -333,18 +340,260 @@ class theatre(commands.Cog):
         embed.set_footer(text="Date - {}".format(timestamp))
         await ctx.send(embed=embed)
     
+    
+    @app_commands.command(description="Hug a user.")
+    @app_commands.user_install()
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.describe(member="The user you wish to hug.")
+    async def hugs(self, interaction: discord.Interaction, member: discord.User):
+        
+        """ Hug a member. """
+        
+        guild = interaction.guild
+        author = interaction.user
+        clr = 0xffae42
+        category = "hug"
+        
+        action_list = [f"{member.mention} got hugged by {author.mention}, cute!",
+                       f"{author.mention} gently hugs {member.mention}.",
+                       f"{member.mention} is pulled into an embrace by {author.mention}.",
+                       f"{author.mention} decides to hug {member.mention} tight, but doesn't let go. So adorable~",
+                       f"{author.mention} gives their biggest hug to {member.mention}!"]
+        
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        elif member != None:
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
+            
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            # Send the embed.
+            await interaction.response.send_message(embed=embed)
+    
+    @app_commands.command(description="Kiss a user.")
+    @app_commands.user_install()
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.describe(member="The user you wish to kiss.")
+    async def kisses(self, interaction: discord.Interaction, member: discord.User):
+        
+        """ Hug a member. """
+        
+        guild = interaction.guild
+        author = interaction.user
+        clr = 0xffae42
+        category = "kiss"
+        
+        A = f"{author.mention}"
+        B = f"{member.mention}"
+        action_list = [
+                    f"{A} kisses {B} gently. Their lips meet and won't part~",
+                    f"{B} gets a soft kiss from {A}. They are cute.",
+                    f"{B} blushes after being blown a kiss from {A}.",
+                    f"{B} and {A} are kissing so intimately.",
+                    f"{A} lavishly kissies {B}'s lips."
+                ]
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        elif member != None:
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
+            
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            # Send the embed.
+            await interaction.response.send_message(embed=embed)
+    
+    @app_commands.command(description="Shoot a user.")
+    @app_commands.user_install()
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.describe(member="The user you wish to shoot.")
+    async def fire(self, interaction: discord.Interaction, member: discord.User):
+        
+        """ Shoot a member. """
+        
+        guild = interaction.guild
+        author = interaction.user
+        clr = 0xffae42
+        category = "shoot"
+        
+        A = f"{author.mention}"
+        B = f"{member.mention}"
+        action_list = [
+                    f"{A} shoots {B}. They're dead.",
+                    f"{B} is being judged by {A}. Death Sentence!",
+                    f"{A} cocks the gun and shoots {B}. They missed. Weakness!",
+                    f"{B} evades the shots {A} takes at them. "
+                ]
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        elif member != None:
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
+            
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            # Send the embed.
+            await interaction.response.send_message(embed=embed)
+    
+    @app_commands.command(description="Dropkick a user.")
+    @app_commands.user_install()
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.describe(member="The user you wish to dropkick.")
+    async def kickdown(self, interaction: discord.Interaction, member: discord.User):
+        
+        """ Dropkick a member. """
+        
+        guild = interaction.guild
+        author = interaction.user
+        clr = 0xffae42
+        category = "kick"
+        
+        A = f"{author.mention}"
+        B = f"{member.mention}"
+        action_list = [
+                    f"{A} kicks {B} and breaks their bones. Ouch.",
+                    f"{B} is dropkicked by {A}.",
+                    f"{A} kicks {B}'s legs. Go down already!",
+                    f"{B} gets kicked to the ground by {A}."
+                ]
+        
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        elif member != None:
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
+            
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            # Send the embed.
+            await interaction.response.send_message(embed=embed)
+    
+    @app_commands.command(description="Bonk a user.")
+    @app_commands.user_install()
+    @app_commands.allowed_installs(guilds=True, users=True)
+    @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+    @app_commands.describe(member="The user you wish to bonk.")
+    async def hornybonk(self, interaction: discord.Interaction, member: discord.User):
+        
+        """ Bonk a member. """
+        
+        guild = interaction.guild
+        author = interaction.user
+        clr = 0xffae42
+        category = "bonk"
+        hmtai = pyhmtai()
+        
+        A = f"{author.mention}"
+        B = f"{member.mention}"
+        action_list = [
+                    f"{A} bonks {B} with a baseball bat. Ouch!",
+                    f"{B} is being bonked by {A}.",
+                    f"{A} bonks {A} because they're horny.",
+                    f"{A} sends {B} to horny jail!" 
+                ]
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        elif member != None:
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
+            
+            link = hmtai.sfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            # Send the embed.
+            await interaction.response.send_message(embed=embed)
+    
+    
+
+    
+
+    # SAFE FOR WORK
+    
+    
     @commands.command(name="hug")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
     async def hug(self, ctx, member: discord.Member=None):
-        """ Hug a member and interact with them. You can either mention them (and leave it empty) or tag them. """
+        """ Hug a member. You can either mention them (and leave it empty) or tag them. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
         category = "hug"
-        perform = "being hugged by"
+
         clr = await ctx.embed_colour()
+        
+
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -368,57 +617,62 @@ class theatre(commands.Cog):
         else:
             member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
+
         
         # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
         if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
             await ctx.send(embed=embed)
         elif member_ult != None:
-            
-            # Random number to pick a gif.
             if member_ult in guild.members:
-                length = len(sfwcategories[category])
+                member = member_ult
             else:
                 return
+            action_list = [
+                        f"{member.mention} got hugged by {author.mention}, cute!",
+                        f"{author.mention} gently hugs {member.mention}.",
+                        f"{member.mention} is pulled into an embrace by {author.mention}.",
+                        f"{author.mention} decides to hug {member.mention} tight, but doesn't let go. So adorable~",
+                        f"{author.mention} gives their biggest hug to {member.mention}!"
+                       ]
             
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
             
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
+            
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+
+            
+            # Random number to pick an action.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
             
             # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. A hug a day keeps the doctor away!", color=clr)
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
             embed.set_image(url=link)
+            
             
             # Send the embed.
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
             await ctx.send(embed=embed)
-            
+    
     @commands.command(name="cuddle")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
     async def cuddle(self, ctx, member: discord.Member=None):
-        """ Cuddle a member and interact with them. You can either mention them (and leave it empty) or tag them. """
+        """ Cuddle a member. You can either mention them (and leave it empty) or tag them. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
         category = "cuddle"
-        perform = "being cuddled by"
+
         clr = await ctx.embed_colour()
+        
+
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -442,279 +696,67 @@ class theatre(commands.Cog):
         else:
             member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
-            
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Is it not the best to cuddle?", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="snuggle")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def snuggle(self, ctx, member: discord.Member=None):
-        """ Snuggle a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "snuggle"
-        perform = "being snuggled by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
         
         # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
         if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
             await ctx.send(embed=embed)
         elif member_ult != None:
             
-            # Random number to pick a gif.
             if member_ult in guild.members:
-                length = len(sfwcategories[category])
+                member = member_ult
             else:
                 return
             
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
+            action_list = [
+                f"{member.mention} got cuddled by {author.mention}, cute!",
+                f"{author.mention} gently cuddles up to {member.mention}.",
+                f"{member.mention} is pulled into a cuddle puddle by {author.mention}.",
+                f"{author.mention} cuddles {member.mention} to death. So adorable~"
+                ]
             
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Share the joy and snuggle each other!", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="nuzzle")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def nuzzle(self, ctx, member: discord.Member=None):
-        """ Nuzzle a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "nuzzle"
-        perform = "being nuzzled by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
             
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
             
             # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
+            action_length = len(action_list)
             
             # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Someone as wonderful as you.", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="comfort")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def comfort(self, ctx, member: discord.Member=None):
-        """ Comfort a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "comfort"
-        perform = "being comforted by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
+            randomaction = random.randint(0,action_length-1)
             
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
             
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
+            perform = action_list[randomaction]
             
             # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. They are there for you.", color=clr)
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
             embed.set_image(url=link)
+            
             
             # Send the embed.
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
             await ctx.send(embed=embed)
     
     @commands.command(name="kiss")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
     async def kiss(self, ctx, member: discord.Member=None):
-        """ Kiss a member and interact with them. You can either mention them (and leave it empty) or tag them. """
+        """ Kiss a member. You can either mention them (and leave it empty) or tag them. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
         category = "kiss"
-        perform = "being kissed by"
+
         clr = await ctx.embed_colour()
+        
+
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -738,57 +780,68 @@ class theatre(commands.Cog):
         else:
             member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
+
         
         # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
         if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
             await ctx.send(embed=embed)
         elif member_ult != None:
             
-            # Random number to pick a gif.
             if member_ult in guild.members:
-                length = len(sfwcategories[category])
+                member = member_ult
             else:
                 return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} kisses {B} gently. Their lips meet and won't part~",
+                    f"{B} gets a soft kiss from {A}. They are cute.",
+                    f"{B} blushes after being blown a kiss from {A}.",
+                    f"{B} and {A} are kissing so intimately.",
+                    f"{A} lavishly kissies {B}'s lips."
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
             
             # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
+
+            randomaction = random.randint(0,action_length-1)
             
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
+            
+            perform = action_list[randomaction]
             
             # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Such an intimate embrace indeed!", color=clr)
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
             embed.set_image(url=link)
+            
             
             # Send the embed.
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
             await ctx.send(embed=embed)
     
-    @commands.command(name="yurihug")
+    @commands.command(name="handhold")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
-    async def yurihug(self, ctx, member: discord.Member=None):
-        """ Yurihug a member and interact with them. You can either mention them (and leave it empty) or tag them. """
+    async def handhold(self, ctx, member: discord.Member=None):
+        """ Hold a member's hand. You can either mention them (and leave it empty) or tag them. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
-        category = "yurihug"
-        perform = "being yurihugged by"
+        category = "handhold"
+
         clr = await ctx.embed_colour()
+        
+
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -812,279 +865,65 @@ class theatre(commands.Cog):
         else:
             member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
-            
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Hugs are the best.", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="yuricuddle")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def yuricuddle(self, ctx, member: discord.Member=None):
-        """ Yurihug a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "yuricuddle"
-        perform = "being yuricuddled by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
         
         # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
         if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
             await ctx.send(embed=embed)
         elif member_ult != None:
-            
-            # Random number to pick a gif.
             if member_ult in guild.members:
-                length = len(sfwcategories[category])
+                member = member_ult
             else:
                 return
+            action_list = [
+                f"{author.mention} picks {member.mention}'s hand and squeezes it. So sweet~",
+                f"{member.mention} blushes after {author.mention} takes their hand.",
+                f"{author.mention} caresses {member.mention}'s hand. Cute!",
+                f"{member.mention}'s fingers intertwine with {author.mention}'s. How adorable~"
+                ]
             
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}, so adorable!", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="yurisnuggle")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def yurisnuggle(self, ctx, member: discord.Member=None):
-        """ Yurisnuggle a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "yurisnuggle"
-        perform = "being yurisnuggled by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
             
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
             
             # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
+            action_length = len(action_list)
             
             # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. I spy two people snuggling!", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="yurikiss")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def yurikiss(self, ctx, member: discord.Member=None):
-        """ Yurihug a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "yurikiss"
-        perform = "being yurikissed by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
+            randomaction = random.randint(0,action_length-1)
             
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
             
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
+            perform = action_list[randomaction]
             
             # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Hold on, that is so gay.", color=clr)
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
             embed.set_image(url=link)
+            
             
             # Send the embed.
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
             await ctx.send(embed=embed)
     
     @commands.command(name="bite")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
     async def bite(self, ctx, member: discord.Member=None):
-        """ Bite a member and interact with them. You can either mention them (and leave it empty) or tag them. """
+        """ Bite a member. You can either mention them (and leave it empty) or tag them. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
         category = "bite"
-        perform = "being bitten by"
+
         clr = await ctx.embed_colour()
+        
+
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -1108,57 +947,484 @@ class theatre(commands.Cog):
         else:
             member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
+
         
         # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
         if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
             await ctx.send(embed=embed)
         elif member_ult != None:
-            
-            # Random number to pick a gif.
             if member_ult in guild.members:
-                length = len(sfwcategories[category])
+                member = member_ult
             else:
                 return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} bites {B}'s hand. Their teeth marks show!",
+                    f"{B} gets nibbled by {A}.",
+                    f"{B} is annoyed at {A} biting their finger.",
+                    f"{B} and {A} are biting and fighting."
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
             
             # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
+
+            randomaction = random.randint(0,action_length-1)
             
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
+            
+            perform = action_list[randomaction]
             
             # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Reminder that you shall only bite with consent, my dears.", color=clr)
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
             embed.set_image(url=link)
+            
             
             # Send the embed.
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="tickle")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def tickle(self, ctx, member: discord.Member=None):
+        """ Tickle a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "tickle"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} tickles the sides of {B}! Now they are wrestling.",
+                    f"{B} is surprised by the tickle attack of {A}.",
+                    f"{B} gets tickled all over by {A}.",
+                    f"{B} has their feet tickled by {A}."
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="highfive")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def highfive(self, ctx, member: discord.Member=None):
+        """ Highfive a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "highfive"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} highfives {B} after praising them.",
+                    f"{B} is getting a highfive from {A}.",
+                    f"{B} is surprised by the highfive to the back of their head from {A}.",
+                    f"{A} throws {B} a highfive. They miss the cue."
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="wink")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def wink(self, ctx, member: discord.Member=None):
+        """ Wink at a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "wink"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} winks at {B}.",
+                    f"{B} is getting looks from {A}.",
+                    f"{B} is being thrown a wink by {A}. So dirty-minded!",
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="shoot")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def shoot(self, ctx, member: discord.Member=None):
+        """ Shoot a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "shoot"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} shoots {B}. They're dead.",
+                    f"{B} is being judged by {A}. Death Sentence!",
+                    f"{A} cocks the gun and shoots {B}. They missed. Weakness!",
+                    f"{B} evades the shots {A} takes at them. "
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="slap")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def slap(self, ctx, member: discord.Member=None):
+        """ Slap a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "slap"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} slaps {B} straight in the face. They died. Oopsie!",
+                    f"{B} is being chased by {A} trying to slap them.",
+                    f"{A} slaps {B}'s butt. Wooey!",
+                    f"{B} dodges the slaps from {A} and slaps them instead!"
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
             await ctx.send(embed=embed)
     
     @commands.command(name="pat")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
     async def pat(self, ctx, member: discord.Member=None):
-        """ Pat a member and interact with them. You can either mention them (and leave it empty) or tag them. """
+        """ Pat a member. You can either mention them (and leave it empty) or tag them. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
         category = "pat"
-        perform = "being pat by"
+
         clr = await ctx.embed_colour()
+        
+
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -1182,45 +1448,1573 @@ class theatre(commands.Cog):
         else:
             member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
+
         
         # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
         if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
             await ctx.send(embed=embed)
         elif member_ult != None:
-            
-            # Random number to pick a gif.
             if member_ult in guild.members:
-                length = len(sfwcategories[category])
+                member = member_ult
             else:
                 return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} pats {B}. There, there. Everything will be okay.",
+                    f"{B} is being pet by {A}.",
+                    f"{A} gently pats {B}'s head. Adorable~",
+                    f"{B} melts away from the pats of {A}."
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
             
             # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
+
+            randomaction = random.randint(0,action_length-1)
             
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
+            
+            perform = action_list[randomaction]
             
             # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Are you not so cute?", color=clr)
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
             embed.set_image(url=link)
+            
             
             # Send the embed.
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
             await ctx.send(embed=embed)
     
+    @commands.command(name="dropkick")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def dropkick(self, ctx, member: discord.Member=None):
+        """ Dropkick a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "kick"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} kicks {B} and breaks their bones. Ouch.",
+                    f"{B} is dropkicked by {A}.",
+                    f"{A} kicks {B}'s legs. Go down already!",
+                    f"{B} gets kicked to the ground by {A}."
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="poke")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def poke(self, ctx, member: discord.Member=None):
+        """ Poke a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "poke"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} pokes {B}. Attention pleaseee!",
+                    f"{B} getting poked by {A}.",
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="throw")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def throw(self, ctx, member: discord.Member=None):
+        """ Throw a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "yeet"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} throws {B} away.",
+                    f"{B} gets thrown around by {A}.",
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="thumbsup")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def thumbsup(self, ctx, member: discord.Member=None):
+        """ Give a member thumbs up. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "thumbsup"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} gives {B} a thumbsup.",
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="punch")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def punch(self, ctx, member: discord.Member=None):
+        """ Punch a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "punch"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} punches {B} in the balls.",
+                    f"{B} has their gut punched by {A}.",
+                    f"{A} throws punches at {B}."
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="stare")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def stare(self, ctx, member: discord.Member=None):
+        """ Stare at a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "stare"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} stares at {B} from afar.",
+                    f"{B} is being watched by {A}. They're uncomfortable now.",
+                    f"{A} throws shade at {B}."
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="wave")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def wave(self, ctx, member: discord.Member=None):
+        """ Wave at a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "wave"
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} waves at {B} from afar. Hello there!",
+                    f"{B} is being waved at by {A}.",
+                    f"{A} waves for {B} to come over."
+                ]
+
+
+            resp = requests.get(f"https://nekos.best/api/v2/{category}")
+            link = resp.json()
+            link = link["results"][0]["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="bonk")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def bonk(self, ctx, member: discord.Member=None):
+        """ Bonk a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "bonk"
+        hmtai = pyhmtai()
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} bonks {B} with a baseball bat. Ouch!",
+                    f"{B} is being bonked by {A}.",
+                    f"{A} bonks {A} because they're horny.",
+                    f"{A} sends {B} to horny jail!" 
+                ]
+
+            link = hmtai.sfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="bully")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def bully(self, ctx, member: discord.Member=None):
+        """ Bully a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "bully"
+        hmtai = pyhmtai()
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} bullies {B}. Teehee!",
+                    f"{B} is being bullied by {A}.",
+                ]
+
+            link = hmtai.sfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="lick")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def lick(self, ctx, member: discord.Member=None):
+        """ Lick a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "lick"
+        hmtai = pyhmtai()
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} licks {B} all over. Naughty!",
+                    f"{B} is being licked by {A}.",
+                ]
+
+            link = hmtai.sfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="boop")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def boop(self, ctx, member: discord.Member=None):
+        """ Boop a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "boop"
+        hmtai = pyhmtai()
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} boops {B}'s nose.",
+                    f"{B} is being booped by {A}.",
+                ]
+
+            link = hmtai.sfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="kill")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def kill(self, ctx, member: discord.Member=None):
+        """ Kill a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "kill"
+        hmtai = pyhmtai()
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                    f"{A} kills {B}. Die!",
+                    f"{A} says they will kill {B} so hard, that they'll die to death.",
+                ]
+
+            link = hmtai.sfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+            
+            # Random number to pick a gif.
+            action_length = len(action_list)
+            
+            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
+
+            randomaction = random.randint(0,action_length-1)
+            
+            
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    
+    
+    
+    # Single member ones
+    
+    @commands.command(name="cry")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def cry(self, ctx):
+        """ Cry. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "cry"
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} cries all alone. Someone comfort them!",
+                    f"{A} starts sobbing. What's up, dear?",
+                    f"{A}'s tears roll down their cheeks. You're safe, darling."
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+    @commands.command(name="blush")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def blush(self, ctx):
+        """ Blush. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "blush"
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} blushes bright red. Their face is so cute!",
+                    f"{A}'s face has become red like a tomato. Naww!",
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+    @commands.command(name="pout")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def pout(self, ctx):
+        """ Pout. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "pout"
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} pouts in a corner.",
+                    f"{A}'s pouting phase is so cute!",
+                    f"{A} has been pouting for a while now~"
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+    @commands.command(name="dance")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def dance(self, ctx):
+        """ Dance. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "dance"
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} is dancing all over the place. Disco much?",
+                    f"{A} breakdances on the floor. Careful!",
+                    f"{A} wipes the floor with everyone when it comes to dancing!"
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+    @commands.command(name="facepalm")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def facepalm(self, ctx):
+        """ Facepalm. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "facepalm"
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} facepalms. How cringe.",
+                    f"{A} is cringing at the sight in front of them.",
+                    f"{A} dies of cringe immediately."
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+    @commands.command(name="lurk")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def lurk(self, ctx):
+        """ Lurk. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "lurk"
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} is lurking around. Shady!",
+                    f"{A} lurks the chat. Suspicious much!",
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+    @commands.command(name="nod")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def nod(self, ctx):
+        """ Nod. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "nod"
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} nods. They understand.",
+                    f"{A} agrees.",
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+    @commands.command(name="nope")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def nope(self, ctx):
+        """ Nope. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "nope"
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} nopes the fuck out.",
+                    f"{A} disagrees.",
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+    @commands.command(name="shrug")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def shrug(self, ctx):
+        """ Shrug. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "shrug"
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} shrugs. Who cares?",
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+    @commands.command(name="smug")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def smug(self, ctx):
+        """ Smug. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "smug"
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} is so smug."
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+    @commands.command(name="nosebleed")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def nosebleed(self, ctx):
+        """ Nosebleed. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "nosebleed"
+        hmtai = pyhmtai()
+        
+        clr = await ctx.embed_colour()
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} gets a nosebleed. Lewd!"
+                ]
+
+
+        resp = requests.get(f"https://nekos.best/api/v2/{category}")
+        link = resp.json()
+        link = link["results"][0]["url"]
+            
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
+            
+        perform = action_list[randomaction]
+            
+        # Next we get the link and input it into the embed,
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
+        embed.set_image(url=link)
+
+            
+        # Send the embed.
+        await ctx.send(embed=embed)
+    
+
+
+
+
+
+
+
     @commands.command(name="uppie")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
@@ -1287,376 +3081,6 @@ class theatre(commands.Cog):
             
             # Next we get the link and input it into the embed,
             embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. And up you go!", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="lick")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def lick(self, ctx, member: discord.Member=None):
-        """ Lick a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "lick"
-        perform = "being licked by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
-
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
-            
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. How tasty one can be..", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="love")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def love(self, ctx, member: discord.Member=None):
-        """ Love a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "love"
-        perform = "being loved by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
-
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
-            
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Everyone is loved, and you especially by {author.name}.", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="poke")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def poke(self, ctx, member: discord.Member=None):
-        """ Bite a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "poke"
-        perform = "being poked by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
-
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
-            
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Is anyone there? No?", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="bully")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def bully(self, ctx, member: discord.Member=None):
-        """ Bully a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "bully"
-        perform = "being bullied by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
-
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
-            
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Who was bad? You were!", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="cap")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def cap(self, ctx, member: discord.Member=None):
-        """ Bite a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "cap"
-        perform = "being capped by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
-
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
-            
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Keep calm and cope.", color=clr)
             embed.set_image(url=link)
             
             # Send the embed.
@@ -1739,228 +3163,6 @@ class theatre(commands.Cog):
             embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
             await ctx.send(embed=embed)
     
-    @commands.command(name="destroy")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def destroy(self, ctx, member: discord.Member=None):
-        """ Destroy a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "destroy"
-        perform = "being destroyed by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
-
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
-            
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Nothing was left of them following that day..", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="bonk")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def bonk(self, ctx, member: discord.Member=None):
-        """ Bonk a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "bonk"
-        perform = "being bonked by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
-
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
-            
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Bonk, go to jail.", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
-    @commands.command(name="tickle")
-    @commands.guild_only()   
-    @commands.cooldown(1, 4, commands.BucketType.user)
-    async def tickle(self, ctx, member: discord.Member=None):
-        """ Tickle a member and interact with them. You can either mention them (and leave it empty) or tag them. """
-        
-        # Basic checks.
-        guild = ctx.guild
-        author = ctx.message.author
-        category = "tickle"
-        perform = "being tickled by"
-        clr = await ctx.embed_colour()
-        
-        # Debug Statement
-        if await self.config.guild(guild).enable_debug():
-            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
-            return
-        
-        if await self.config.guild(guild).enable_blacklist():
-            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
-                await ctx.send("This command is not allowed here.")
-                return
-        
-        # Check if the member is in the server:
-        if member == None:
-            if ctx.message.reference==None:
-                member_ult = None
-            elif ctx.message.reference.cached_message!=None:
-                member_ult = ctx.message.reference.cached_message.author
-            else:
-                msg = await ctx.fetch_message(ctx.message.reference.message_id)
-                member_ult = get(guild.members, id=msg.author.id)
-        else:
-            member_ult = member
-
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
-        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
-        if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
-            await ctx.send(embed=embed)
-        elif member_ult != None:
-            
-            # Random number to pick a gif.
-            if member_ult in guild.members:
-                length = len(sfwcategories[category])
-            else:
-                return
-            
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
-            
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
-            
-            # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. Is someone ticklish? I hope not!", color=clr)
-            embed.set_image(url=link)
-            
-            # Send the embed.
-            await ctx.send(embed=embed)
-        else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
-            await ctx.send(embed=embed)
-    
     @commands.command(name="flowers")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
@@ -2035,18 +3237,27 @@ class theatre(commands.Cog):
             embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
             await ctx.send(embed=embed)
     
-    @commands.command(name="handhold")
+
+    
+    
+    
+    # NOT SAFE FOR WORK
+    
+    @commands.command(name="bj")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
-    async def handhold(self, ctx, member: discord.Member=None):
-        """ Hold the hand of a member and interact with them. You can either mention them (and leave it empty) or tag them. """
+    async def bj(self, ctx, member: discord.Member=None):
+        """ Blowjob a member. You can either mention them (and leave it empty) or tag them. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
-        category = "handhold"
-        perform = "is holding hands with"
+        category = "blowjob"
+        hmtai = pyhmtai()
+
         clr = await ctx.embed_colour()
+        
+
         
         # Debug Statement
         if await self.config.guild(guild).enable_debug():
@@ -2057,6 +3268,13 @@ class theatre(commands.Cog):
             if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
                 await ctx.send("This command is not allowed here.")
                 return
+        if await self.config.guild(guild).enable_nsfw():
+            if ctx.channel.nsfw == False:
+                await ctx.send("This command is not allowed here. Go to an adult channel.")
+                return
+        else:
+            await ctx.send("This command is not allowed.")
+            return
         
         # Check if the member is in the server:
         if member == None:
@@ -2070,56 +3288,497 @@ class theatre(commands.Cog):
         else:
             member_ult = member
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
+
         
         # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
         if member_ult == author:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you mentioned yourself. Please choose another.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
             await ctx.send(embed=embed)
         elif member_ult != None:
-            
-            # Random number to pick a gif.
             if member_ult in guild.members:
-                length = len(sfwcategories[category])
+                member = member_ult
             else:
                 return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                        f"{A} gives {B} a blowjob. Sloppy!",
+                        f"{A} gives {B} the gawk gawk 8000!"
+                       ]
             
-            # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-            randompick = random.randint(0, length - 1)
             
-            # Add '.gif' to make it a proper gif, otherwise it will not load.
-            link = sfwcategories[category][randompick]
-            link = link + ".gif"
+            
+            link = hmtai.nsfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+
+            
+            # Random number to pick an action.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
             
             # Next we get the link and input it into the embed,
-            embed = discord.Embed(title="", description=f"{member_ult.mention} is {perform} {author.mention}. What a sweet display of affection.", color=clr)
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
             embed.set_image(url=link)
+            
             
             # Send the embed.
             await ctx.send(embed=embed)
         else:
-            embed = discord.Embed(title="", description=f"My apologies, {author.name}. \n I was not able to fulfill your command, as you have not mentioned or replied to a member of our establishment.", color=clr)
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
             await ctx.send(embed=embed)
     
-    @commands.command(name="blush")
+    @commands.command(name="boobjob")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
-    async def blush(self, ctx):
-        """ Blush and act shy. """
+    async def boobjob(self, ctx, member: discord.Member=None):
+        """ Boobjob a member. You can either mention them (and leave it empty) or tag them. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
-        category = "blush"
-        perform = "is blushing."
+        category = "boobjob"
+        hmtai = pyhmtai()
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        if await self.config.guild(guild).enable_nsfw():
+            if ctx.channel.nsfw == False:
+                await ctx.send("This command is not allowed here. Go to an adult channel.")
+                return
+        else:
+            await ctx.send("This command is not allowed.")
+            return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                        f"{A} gives {B} a boobjob. Sticky!",
+                        f"{B} gets the hottest boobjob from {A}."
+                       ]
+            
+            
+            
+            link = hmtai.nsfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+
+            
+            # Random number to pick an action.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="handjob")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def handjob(self, ctx, member: discord.Member=None):
+        """ Handjob a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "handjob"
+        hmtai = pyhmtai()
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        if await self.config.guild(guild).enable_nsfw():
+            if ctx.channel.nsfw == False:
+                await ctx.send("This command is not allowed here. Go to an adult channel.")
+                return
+        else:
+            await ctx.send("This command is not allowed.")
+            return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                        f"{A} gives {B} a handjob. Sticky!",
+                        f"{B} gets a nice handjob from {A}."
+                       ]
+            
+            
+            
+            link = hmtai.nsfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+
+            
+            # Random number to pick an action.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="footjob")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def footjob(self, ctx, member: discord.Member=None):
+        """ Footjob a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "footjob"
+        hmtai = pyhmtai()
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        if await self.config.guild(guild).enable_nsfw():
+            if ctx.channel.nsfw == False:
+                await ctx.send("This command is not allowed here. Go to an adult channel.")
+                return
+        else:
+            await ctx.send("This command is not allowed.")
+            return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                        f"{A} gives {B} a footjob. Sticky!",
+                        f"{B} gets a nice footjob from {A}."
+                       ]
+            
+            
+            
+            link = hmtai.nsfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+
+            
+            # Random number to pick an action.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="creampie")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def creampie(self, ctx, member: discord.Member=None):
+        """ Creampie a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "creampie"
+        hmtai = pyhmtai()
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        if await self.config.guild(guild).enable_nsfw():
+            if ctx.channel.nsfw == False:
+                await ctx.send("This command is not allowed here. Go to an adult channel.")
+                return
+        else:
+            await ctx.send("This command is not allowed.")
+            return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                        f"{A} gives {B} a drippy creampie. Sticky!",
+                       ]
+            
+            
+            
+            link = hmtai.nsfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+
+            
+            # Random number to pick an action.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    @commands.command(name="dom")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def dom(self, ctx, member: discord.Member=None):
+        """ Dom a member. You can either mention them (and leave it empty) or tag them. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "femdom"
+        hmtai = pyhmtai()
+
+        clr = await ctx.embed_colour()
+        
+
+        
+        # Debug Statement
+        if await self.config.guild(guild).enable_debug():
+            await self.debug_log(guild, category, "Running " + category + " command of 'theatre' cog.")
+            return
+        
+        if await self.config.guild(guild).enable_blacklist():
+            if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
+                await ctx.send("This command is not allowed here.")
+                return
+        if await self.config.guild(guild).enable_nsfw():
+            if ctx.channel.nsfw == False:
+                await ctx.send("This command is not allowed here. Go to an adult channel.")
+                return
+        else:
+            await ctx.send("This command is not allowed.")
+            return
+        
+        # Check if the member is in the server:
+        if member == None:
+            if ctx.message.reference==None:
+                member_ult = None
+            elif ctx.message.reference.cached_message!=None:
+                member_ult = ctx.message.reference.cached_message.author
+            else:
+                msg = await ctx.fetch_message(ctx.message.reference.message_id)
+                member_ult = get(guild.members, id=msg.author.id)
+        else:
+            member_ult = member
+
+
+        
+        # If a member is not passed, send a message telling the user to mention or reply to a member. Otherwise, generates a random number and picks a gif from the list.     
+        if member_ult == author:
+            embed = discord.Embed(title="", description=f"Oh dear. You mentioned yourself. What a shame. Please mention someone else.", color=clr)
+            await ctx.send(embed=embed)
+        elif member_ult != None:
+            if member_ult in guild.members:
+                member = member_ult
+            else:
+                return
+            A = f"{author.mention}"
+            B = f"{member.mention}"
+            action_list = [
+                        f"{B} gets femdommed by {A}. Naughty!",
+                       ]
+            
+            
+            
+            link = hmtai.nsfw(category)
+            resp = requests.get(link)
+            link = resp.json()
+            link = link["url"]
+
+            
+            # Random number to pick an action.
+            action_length = len(action_list)
+            randomaction = random.randint(0,action_length-1)
+            perform = action_list[randomaction]
+            
+            # Next we get the link and input it into the embed,
+            embed = discord.Embed(title="", description=f"{perform}", color=clr)
+            embed.set_image(url=link)
+            
+            
+            # Send the embed.
+            await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title="", description=f"Oh dear. The person you mentioned isn't with us.", color=clr)
+            await ctx.send(embed=embed)
+    
+    
+    
+    
+    
+    @commands.command(name="orgasm")
+    @commands.guild_only()   
+    @commands.cooldown(1, 4, commands.BucketType.user)
+    async def orgasm(self, ctx):
+        """ Cum. """
+        
+        # Basic checks.
+        guild = ctx.guild
+        author = ctx.message.author
+        category = "cum"
+        hmtai = pyhmtai()
+        
         clr = await ctx.embed_colour()
         
         # Debug Statement
@@ -2131,46 +3790,50 @@ class theatre(commands.Cog):
             if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
                 await ctx.send("This command is not allowed here.")
                 return
+        if await self.config.guild(guild).enable_nsfw():
+            if ctx.channel.nsfw == False:
+                await ctx.send("This command is not allowed here. Go to an adult channel.")
+                return
+        else:
+            await ctx.send("This command is not allowed.")
+            return
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} cums all over the place. Mommy chill!"
+                ]
 
-        length = len(sfwcategories[category])
-
+        link = hmtai.nsfw(category)
+        resp = requests.get(link)
+        link = resp.json()
+        link = link["url"]
             
-        # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-        randompick = random.randint(0, length - 1)
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
             
-        # Add '.gif' to make it a proper gif, otherwise it will not load.
-        link = sfwcategories[category][randompick]
-        link = link + ".gif"
+        perform = action_list[randomaction]
             
         # Next we get the link and input it into the embed,
-        embed = discord.Embed(title="", description=f"{author.mention} {perform}. Come here, darling.", color=clr)
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
         embed.set_image(url=link)
+
             
         # Send the embed.
         await ctx.send(embed=embed)
-
-    @commands.command(name="run")
+    
+    @commands.command(name="masturbate")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
-    async def run(self, ctx):
-        """ Run away and act shy. """
+    async def masturbate(self, ctx):
+        """ Masturbate. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
-        category = "run"
-        perform = "is running away."
+        category = "masturbation"
+        hmtai = pyhmtai()
+        
         clr = await ctx.embed_colour()
         
         # Debug Statement
@@ -2182,46 +3845,50 @@ class theatre(commands.Cog):
             if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
                 await ctx.send("This command is not allowed here.")
                 return
+        if await self.config.guild(guild).enable_nsfw():
+            if ctx.channel.nsfw == False:
+                await ctx.send("This command is not allowed here. Go to an adult channel.")
+                return
+        else:
+            await ctx.send("This command is not allowed.")
+            return
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} masturbates all over the place. Mommy chill!"
+                ]
 
-        length = len(sfwcategories[category])
-
+        link = hmtai.nsfw(category)
+        resp = requests.get(link)
+        link = resp.json()
+        link = link["url"]
             
-        # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-        randompick = random.randint(0, length - 1)
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
             
-        # Add '.gif' to make it a proper gif, otherwise it will not load.
-        link = sfwcategories[category][randompick]
-        link = link + ".gif"
+        perform = action_list[randomaction]
             
         # Next we get the link and input it into the embed,
-        embed = discord.Embed(title="", description=f"{author.mention} {perform}. Why the hurry, sweetie?", color=clr)
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
         embed.set_image(url=link)
+
             
         # Send the embed.
         await ctx.send(embed=embed)
     
-    @commands.command(name="hide")
+    @commands.command(name="shlick")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
-    async def hide(self, ctx):
-        """ Hide and act shy. """
+    async def shlick(self, ctx):
+        """ Shlick your pussy. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
-        category = "hide"
-        perform = "is hiding."
+        category = "pussy"
+        hmtai = pyhmtai()
+        
         clr = await ctx.embed_colour()
         
         # Debug Statement
@@ -2233,46 +3900,50 @@ class theatre(commands.Cog):
             if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
                 await ctx.send("This command is not allowed here.")
                 return
+        if await self.config.guild(guild).enable_nsfw():
+            if ctx.channel.nsfw == False:
+                await ctx.send("This command is not allowed here. Go to an adult channel.")
+                return
+        else:
+            await ctx.send("This command is not allowed.")
+            return
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} is playing with their wet pussy. Yum!"
+                ]
 
-        length = len(sfwcategories[category])
-
+        link = hmtai.nsfw(category)
+        resp = requests.get(link)
+        link = resp.json()
+        link = link["url"]
             
-        # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-        randompick = random.randint(0, length - 1)
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
             
-        # Add '.gif' to make it a proper gif, otherwise it will not load.
-        link = sfwcategories[category][randompick]
-        link = link + ".gif"
+        perform = action_list[randomaction]
             
         # Next we get the link and input it into the embed,
-        embed = discord.Embed(title="", description=f"{author.mention} {perform}. What is the matter, precious?", color=clr)
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
         embed.set_image(url=link)
+
             
         # Send the embed.
         await ctx.send(embed=embed)
     
-    @commands.command(name="cry")
+    @commands.command(name="panties")
     @commands.guild_only()   
     @commands.cooldown(1, 4, commands.BucketType.user)
-    async def cry(self, ctx):
-        """ Cry. """
+    async def panties(self, ctx):
+        """ Show your panties. """
         
         # Basic checks.
         guild = ctx.guild
         author = ctx.message.author
-        category = "cry"
-        perform = "is crying."
+        category = "pantsu"
+        hmtai = pyhmtai()
+        
         clr = await ctx.embed_colour()
         
         # Debug Statement
@@ -2284,42 +3955,36 @@ class theatre(commands.Cog):
             if ctx.channel.id in await self.config.guild(guild).channel_blacklist():
                 await ctx.send("This command is not allowed here.")
                 return
+        if await self.config.guild(guild).enable_nsfw():
+            if ctx.channel.nsfw == False:
+                await ctx.send("This command is not allowed here. Go to an adult channel.")
+                return
+        else:
+            await ctx.send("This command is not allowed.")
+            return
 
-        # Load the file of gif links into a dict.
-        with open(giflist, "r") as file:
-            gifdict = json.load(file)
-            
-        # Access the key:value pair of key 'links' associated with the value, 'list of dictionaries (categories) for actions'.
-        gifcategories = gifdict["links"]
-        
-        # Access the sfw categories (at list index 0, nsfw are at list index 1).
-        sfwcategories = gifcategories[0]
-        
+        A = f"{author.mention}"
+        action_list = [
+                    f"{A} shows off their panties. Sexy!"
+                ]
 
-        length = len(sfwcategories[category])
-
+        link = hmtai.nsfw(category)
+        resp = requests.get(link)
+        link = resp.json()
+        link = link["url"]
             
-        # 'length - 1' because of how python assigns values to vectors / lists, they start at zero.    
-        randompick = random.randint(0, length - 1)
+        # Random number to pick a gif.
+        action_length = len(action_list)
+        randomaction = random.randint(0,action_length-1)    
             
-        # Add '.gif' to make it a proper gif, otherwise it will not load.
-        link = sfwcategories[category][randompick]
-        link = link + ".gif"
+        perform = action_list[randomaction]
             
         # Next we get the link and input it into the embed,
-        embed = discord.Embed(title="", description=f"{author.mention} {perform}. Do you need to be consoled?", color=clr)
+        embed = discord.Embed(title="", description=f"{perform}", color=clr)
         embed.set_image(url=link)
+
             
         # Send the embed.
         await ctx.send(embed=embed)
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
