@@ -1,0 +1,16 @@
+{ "user" : {
+    "member_name" : 0,
+    "member_id" : 0,
+    "jail_status" : 0,
+    "gag_status" : 0,
+    "gag_type" : 0,
+    "jail_preference" : "everyone",
+    "gag_preference" : "everyone",
+    "general_preference" : "everyone",
+    "roles" : 0,
+    "bad_words" : [],
+    "strikes" : 0,
+    "safeword" : 0,
+    "claims" : {},
+    "color" : "#ffffff"
+}}

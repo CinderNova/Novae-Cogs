@@ -7,9 +7,32 @@ import redbot.core.data_manager
 from typing import Callable, Optional
 from ..abc import MixinMeta, CompositeMetaClass
 from ..common.calc import Calculation
-from .common.pagination import Pagination
+from ..common.pagination import Pagination
 
 clr = 0xffffff
+
+class Pets():
+    def __init__(self):
+        self.owners = {}
+        self.level = 1
+        self.price = 5000
+        self.feeding_interval = 18 # in hours
+        self.last_fed = 0 # string-datetime
+        self.preferred_food = "Meat"
+        self.tricks = [] # idk
+        
+         
+
+class House():
+    def __init__(self):
+        self.owners = {}
+        self.level = 1
+        self.price = 5000
+        self.upgraded_counter = 0
+        self.pets = {}
+        
+    
+
 
 class Custom(MixinMeta):
     

@@ -15,8 +15,8 @@
         "Nsfw",
         "Bdsm"
     ],
-    "min_bot_version": "3.5.13",
-    "version" : "3.0.0",
+    "min_bot_version": "3.5.5",
+    "version" : "2.0.0",
     "hidden": false,
     "disabled": false,
     "type": "COG"
