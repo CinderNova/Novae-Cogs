@@ -96,74 +96,54 @@ class Settings(MixinMeta):
                 await ctx.send("You have disabled shop.")
             else:
                 await ctx.send("You must enter a valid truth value, true or false.")
+        elif feature.lower() == "event":
+            # Enable or disable shop.
+            if bool.lower() in ["true", "on", "enable", "enabled", "yes"]:
+                await self.config.guild(guild).enable_event.set(True)
+                await ctx.send("You have enabled event mode.")
+            elif bool.lower() in ["false", "disable", "disabled", "no", "off"]:
+                await self.config.guild(guild).enable_event.set(False)
+                await ctx.send("You have disabled event mode.")
+            else:
+                await ctx.send("You must enter a valid truth value, true or false.")
         else:
             await ctx.send("You need to enter an existing feature, or you do not have the necessary permissions.")
     
     @socset.command()
     @commands.guild_only()
     @commands.admin()
-    async def incomeset(self, ctx, option: str, default_income: int):
+    async def set_income(self, ctx, income: int):
         
         """ Set the default income for a specific job, or all of them. \n 
         [options]: (any of the jobs) or all; [default_income]: a positive integer. """
         
         guild = ctx.guild
-        author = ctx.message.author
-        clr = await ctx.embed_colour()
-        job_list = await self.guild(guild).jobs()
-        job_names = job_list.items()
         currency = await redbot.core.bank.get_currency_name(guild)
         
         
-        if default_income <= 0:
-            await ctx.send("Please enter a *trictly positive integer* number.")
+        if income <= 0:
+            await ctx.send("Please enter a *strictly positive integer* number.")
             return
         
-        option, option_is_in = option.lower(), False
-        for index in range(0, len(job_names)):
-            if option == job_names[index][0]:
-                option_is_in = True
+        await self.config.guild(guild).default_income.set(income)
+        await ctx.send("You have successfully set the default income to {:,} {}.".format())
+    
+    @socset.command()
+    @commands.guild_only()
+    @commands.admin()
+    async def max_bet(self, ctx, bet: int):
         
-        if option != "all" and option_is_in:
-            old_income = job_list[option][2]
-            job_list[option][2] = default_income
-            await ctx.send(f"You successfully changed {option}'s income from {old_income} {currency} to: \n{default_income} {currency}")
-            await self.guild(guild).jobs.set(job_list)
-        elif option == "all":
-            name_list_order, old_income_list_order = [], []
-            for key in job_list:
-                name_list_order.append(job_list[key][0])
-                old_income_list_order.append(job_list[key][2])
-                job_list[key][2] = default_income
-                
-            await self.guild(guild).jobs.set(job_list)
-            
-            log_message = "The following jobs have had their default income changed from \n"
-            for i in range(0, len(name_list_order)):
-                log_message += f"{name_list_order[i]} {currency}\n"
-            log_message += f"to {default_income} {currency}."
-            await ctx.send(log_message)
+        """ Set the max amount of money that can be bet. \n 
+        [bet]: a positive integer. """
+        
+        guild = ctx.guild
+        currency = await redbot.core.bank.get_currency_name(guild)
         
         
+        if bet <= 0:
+            await ctx.send("Please enter a *strictly positive integer* number.")
+            return
         
-        'default_income' : 5000,
-            'max_bet' : 50000,
-            
-            'users' : {},
-            
-            'jobs' : {
-                    "queen" : ["queen", "good", 5000, 1],
-                    "king" : ["king", "good", 5000, 1],
-                    "knight" : ["knight", "good", 5000, 1],
-                    "jester" : ["jester", "neutral", 5000, 2],
-                    "pawn" : ["pawn", "neutral", 5000, 2],
-                    "servant" : ["servant", "neutral", 5000, 2],
-                    "mafioso" : ["mafioso", "bad", 5000, 3],
-                    "prostitute" : ["prostitute", "bad", 5000, 3],
-                    "bishop" : ["bishop", "bad", 5000, 3]
-                },
-            
-            'job_bonuses' : {
-                "first" : 1.00,
-                "second" : 1.25,
-                "third" : 1.375},
+        await self.config.guild(guild).max_bet.set(bet)
+        await ctx.send("You have successfully set the max bet amount to {:,} {}.".format()) 
+
