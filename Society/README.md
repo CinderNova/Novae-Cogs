@@ -1,3 +1,10 @@
-# Novae-Cogs
-The repo for my cogs.
-There are various cogs I have written, i.e. Confession, Overseer and others.
+# Society
+This cog will mainly contain commands for shenanigans, like marriage, divorce, gamble / economy commands, as well as other things like jobs and the like.
+
+# Economy
+
+# Marriage
+
+# Gamble
+
+- TBW
